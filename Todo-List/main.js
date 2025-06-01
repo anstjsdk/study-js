@@ -1,30 +1,42 @@
 // 할 일 목록을 localStorage에 저장
 function saveToDos() {
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
+  // localStorage에 아이템저장
+  // localStorage에는 문자열로 반환
+  // setItem(Key값,value값)
 }
 
 // 할 일 삭제 함수
 function deleteToDo(event) {
   const li = event.target.parentElement;
+  //  event(클릭)의 target(버튼)의 부모요소인 li를 상수 li에 지정
   li.remove();
+  // li에 있는 값을 지움
   toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
+  // filter는 arr에서 조건에 맞지않는 요소를 삭제하고 새로운 배열을 만듦
+  //바로 위에 줄에서 li가 삭제 되었기 때문에 li와 toDO랑 값이 같지않기때문에 filter함수를 실행했을 때 조건에 맞지않아 삭제된 li는 빼고 arr생성
   saveToDos();
+  //저장
 }
 
 // 할 일 하나를 화면에 그리는 함수
 function paintToDo(todo) {
+  // 화면에 보이도록 지정
   const li = document.createElement("li");
+  // 상수li에 새로운 li요소를 만들어 저장한다
   li.id = todo.id;
-
+  // li.id와 todo.id
   const span = document.createElement("span");
   span.innerText = todo.text;
-
+  //span에 todo를 넣음
   const button = document.createElement("button");
   button.innerText = "❌";
   button.addEventListener("click", deleteToDo);
 
   li.append(span, button);
-  toDoList.appendChild(li);
+  //두개이상 넣을 때
+  toDoList.append(li);
+  //
 }
 
 // 폼 제출 시 실행되는 함수
@@ -39,6 +51,7 @@ function handleToDoSubmit(event) {
     id: Date.now(),
   };
   toDos.push(newTodoObj);
+  //toDos 배열에 newTOdobj추가
   paintToDo(newTodoObj);
   saveToDos();
 }
