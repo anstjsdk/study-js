@@ -34,3 +34,5 @@ function onSubmit(event) {
 calculation.addEventListener("submit", onSubmit);
 // 폼이 제출(submit)될 때, onSubmit이라는 함수를 실행
 // submit은 이벤트 이름이기 때문에 문자열로 감싼다
+
+// 잘했어요 👍👍👍
