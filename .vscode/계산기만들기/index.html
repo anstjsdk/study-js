@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>계산기만들기</title>
+  </head>
+  <body>
+    <h1>계산기 만들기</h1>
+    <form class="calculation">
+      <input
+        type="number"
+        id="inputNumber1"
+        name="inputNumber1"
+        placeholder="첫번째숫자입력"
+      />
+      <!-- 드롭다운에 옵션들을 선택할 수 있도록  -->
+      <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <input
+        type="number"
+        id="inputNumber2"
+        name="inputNumber2"
+        placeholder="2번째숫자입력"
+      />
+      <!-- type에 submit을 명시해줘야 폼 제출시 이벤트 발생 -->
+      <button class="button" type="submit">실행</button>
+    </form>
+    <!-- 화면에 보이게 하기 위해서 미리 빈공간 명시,아래에 결과 출력 -->
+    <div id="result"></div>
+    <script src="./index.js"></script>
+  </body>
+</html>
