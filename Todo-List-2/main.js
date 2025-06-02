@@ -8,7 +8,7 @@ const toDoList = document.getElementById("todo-list");
 // 2. localStorage에서 기존 할 일 목록을 불러오기
 const savedToDos = localStorage.getItem(TODOS_KEY);
 if (savedToDos) {
-  // [빈칸1] = JSON.parse(savedToDos);
+  toDos = JSON.parse(savedToDos);
 }
 
 // 3. 불러온 할 일 목록을 화면에 바로 그려줌 (반복문 사용, 함수X)
@@ -22,12 +22,12 @@ for (let i = 0; i < toDos.length; i++) {
       `;
   // 삭제 버튼 이벤트 핸들러(함수는 필수)
   li.querySelector("button").addEventListener("click", function (event) {
-    // 1) 화면에서 li 삭제
+    li.remove();
     // 빈칸
     // 2) 배열에서 해당 toDo 삭제
-    // 빈칸
+    toDos = toDos.filter((t) => t.id !== todo.id);
     // 3) localStorage에 저장
-    // 빈칸
+    localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
   });
   toDoList.append(li);
 }
@@ -44,7 +44,7 @@ toDoForm.addEventListener("submit", function (event) {
     text: newTodoText,
     id: Date.now(),
   };
-  // [빈칸4]
+  toDos.push(newTodoObj);
 
   // 화면에 li 추가 (위와 동일한 방식)
   const li = document.createElement("li");
@@ -61,5 +61,5 @@ toDoForm.addEventListener("submit", function (event) {
   toDoList.append(li);
 
   // localStorage에 저장
-  // [빈칸5]
+  localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 });
