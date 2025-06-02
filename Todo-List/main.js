@@ -80,3 +80,9 @@ if (savedToDos) {
   toDos = JSON.parse(savedToDos);
   toDos.forEach(paintToDo);
 }
+
+// element의 id를 받아 와서 상수에 저장
+
+// name, id를 가진 userInfo 라는 Object를 생성
+
+// button에 click이라는 이벤트가 발생하면 deleteUser이라는 함수를 실행
