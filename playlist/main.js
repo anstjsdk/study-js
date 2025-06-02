@@ -1,12 +1,6 @@
 const tracks = [
-  {
-    title: "Sample 1",
-    src: "./music/chello.mp3",
-  },
-  {
-    title: "Sample 2",
-    src: "./music/everything.mp3",
-  },
+  { title: "첼로 노래", src: "./music/chello.mp3" },
+  { title: "everything", src: "./music/everything.mp3" },
 ];
 
 const audio = document.getElementById("audio");
@@ -16,7 +10,6 @@ const nextBtn = document.getElementById("next");
 
 let currentIndex = 0;
 
-// 플레이리스트 DOM 생성
 function renderPlaylist() {
   playlistEl.innerHTML = "";
   tracks.forEach((track, idx) => {
@@ -28,7 +21,6 @@ function renderPlaylist() {
   });
 }
 
-// 곡 재생 함수
 function playTrack(idx) {
   currentIndex = idx;
   audio.src = tracks[idx].src;
@@ -36,21 +28,34 @@ function playTrack(idx) {
   renderPlaylist();
 }
 
-// 이전/다음 버튼
 prevBtn.onclick = () => {
   currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
   playTrack(currentIndex);
 };
+
 nextBtn.onclick = () => {
   currentIndex = (currentIndex + 1) % tracks.length;
   playTrack(currentIndex);
 };
 
-// 곡이 끝나면 다음 곡 자동 재생
 audio.addEventListener("ended", () => {
   nextBtn.onclick();
 });
 
-// 처음에 플레이리스트 렌더링 및 첫 곡 선택
+document.addEventListener("keydown", function (event) {
+  if (event.code === "Space") {
+    event.preventDefault();
+    togglePause();
+  }
+});
+
+function togglePause() {
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+}
+
 renderPlaylist();
 playTrack(currentIndex);
