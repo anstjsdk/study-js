@@ -5,6 +5,7 @@ const title = document.querySelector(".title");
 const pauseBtn = document.querySelector(".pause-btn");
 const prevBtn = document.querySelector(".prev-btn");
 const nextBtn = document.querySelector(".next-btn");
+const kittyBtn = document.querySelector(".kitty-btn");
 
 const tracks = [
   {
@@ -31,53 +32,63 @@ function playTrack(i) {
   musicCover.src = tracks[i].img;
   title.innerText = tracks[i].title;
   audio.src = tracks[i].src;
+  audio.load();
   audio.play();
+  updatePlayState(true);
+}
+
+function updatePlayState(isPlaying) {
+  if (isPlaying) {
+    kittyBtn.classList.remove("hidden");
+    pauseBtn.classList.add("hidden");
+  } else {
+    kittyBtn.classList.add("hidden");
+    pauseBtn.classList.remove("hidden");
+  }
 }
 
 prevBtn.onclick = () => {
   currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
   playTrack(currentIndex);
-  pauseBtn.src = "./assets/pause.svg";
 };
 
 nextBtn.onclick = () => {
   currentIndex = (currentIndex + 1) % tracks.length;
   playTrack(currentIndex);
-  pauseBtn.src = "./assets/pause.svg";
 };
 
 audio.addEventListener("ended", () => {
-  nextBtn.onclick();
+  nextBtn.click();
 });
 
-audio.addEventListener("loadedmetadata", function () {
+audio.addEventListener("loadedmetadata", () => {
   progressBar.max = audio.duration;
 });
 
-audio.addEventListener("timeupdate", function () {
+audio.addEventListener("timeupdate", () => {
   progressBar.value = audio.currentTime;
 });
 
-progressBar.addEventListener("input", function () {
+progressBar.addEventListener("input", () => {
   audio.currentTime = progressBar.value;
 });
 
-document.addEventListener("keydown", function (event) {
-  if (event.code === "Space") {
+document.addEventListener("keydown", (event) => {
+  if (event.code === "Space" && !event.target.matches("input, textarea")) {
     event.preventDefault();
-    replay();
+    togglePlayPause();
   }
 });
 
-pauseBtn.addEventListener("click", replay);
+pauseBtn.addEventListener("click", togglePlayPause);
+kittyBtn.addEventListener("click", togglePlayPause);
 
-function replay() {
+function togglePlayPause() {
   if (audio.paused) {
     audio.play();
-    pauseBtn.src = "./assets/pause.svg";
+    updatePlayState(true);
   } else {
     audio.pause();
-    pauseBtn.src = "./assets/play.svg";
+    updatePlayState(false);
   }
 }
-
