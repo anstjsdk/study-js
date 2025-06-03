@@ -11,15 +11,20 @@
       <h1 class="h1">playlist</h1>
       <div class="title">Everything</div>
       <div class="music-cover">
-        <img class="music-cover" src="./assets/cover/everything.jpg" alt="everything-cover" />
+        <img
+          class="music-cover-img"
+          src="./assets/cover/everything.jpg"
+          alt="everything-cover"
+          height="300px"
+        />
       </div>
+      <input type="range" id="progressBar" min="0" value="0" step="0.01" />
       <div class="controls">
-        <img class="button" src="./assets/left-arrow.svg" alt="left-btn" />
-        <img class="button" src="./assets/pause.svg" alt="stop-btn" />
-        <img class="button" src="./assets/right-arrow.svg" alt="right-btn" />
+        <img class="button prev-btn" src="./assets/prev.svg" alt="left-btn" />
+        <img class="button pause-btn" src="./assets/play.svg" alt="stop-btn" />
+        <img class="button next-btn" src="./assets/next.svg" alt="right-btn" />
       </div>
-      <audio id="myAudio" src="./music/everything.mp3" controls></audio>
-      <input type="range" id="progressBar" min="0" value="0" step="0.1" />
+      <audio id="my-audio" src="./music/everything.mp3"></audio>
     </div>
     <script src="./main.js"></script>
   </body>
