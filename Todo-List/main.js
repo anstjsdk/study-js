@@ -7,8 +7,8 @@ const toDoList = document.getElementById("todo-list");
 
 // 2. localStorage에서 기존 할 일 목록을 불러오기
 const savedToDos = localStorage.getItem(TODOS_KEY);
-if (savedToDos) {
-  toDos = JSON.parse(savedToDos);
+if (savedToDos) { //true값일 때 실행 
+  toDos = JSON.parse(savedToDos); //string에서 object형태로 변함
 }
 
 // 3. 불러온 할 일 목록을 화면에 바로 그려줌 (반복문 사용, 함수X)
@@ -42,13 +42,13 @@ toDoForm.addEventListener("submit", function (event) {
   // 할 일 객체 생성
   const newTodoObj = {
     text: newTodoText,
-    id: Date.now(),
+    id: Date.now(), //현재시간
   };
-  toDos.push(newTodoObj);
+  toDos.push(newTodoObj); //append
 
   // 화면에 li 추가 (위와 동일한 방식)
   const li = document.createElement("li");
-  li.id = newTodoObj.id;
+  li.id = newTodoObj.id; //li아이디를 newtodo id 로 설정
   li.innerHTML = `
         <span>${newTodoObj.text}</span>
         <button>❌</button>

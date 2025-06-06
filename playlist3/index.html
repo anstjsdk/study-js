@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>myplaylist2</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">playlist:></h1>
+      <div class="music-cover-img">
+        <img src="./cover/1000.jpg" alt="music-cover" />
+      </div>
+      <input type="range" id="progressBar" min="0" value="0" step="0.01" />
+      <div class="controls">
+        <img src="" class="pre-btn" alt="left-btn" />
+        <img src="" class="pause-btn" alt="stop-btn" />
+        <img src="" class="square hidden" alt="stop-btn">
+        <img src="" class="next-btn" alt="right-btn" />
+      </div>
+      <audio id="audio" src="./music/in.mp3"></audio>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
