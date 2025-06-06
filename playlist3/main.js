@@ -1,12 +1,11 @@
 const audio = document.getElementById("audio");
 const progressBar = document.getElementById("progressBar");
-const musicCover = document.querySelector(".misic-cover-img");
-const musicImg = document.querySelector(".controls");
+const musicCover = document.querySelector(".music-cover-img");
 const title = document.querySelector(".title");
-const prevBtn = document.querySelector(".pre-btn");
-const squareBtn = document.querySelector(".square");
-const pauseBtn = document.querySelector(".pausee-btn");
+const pauseBtn = document.querySelector(".pause-btn");
+const prevBtn = document.querySelector(".prev-btn");
 const nextBtn = document.querySelector(".next-btn");
+const kittyBtn = document.querySelector(".kitty-btn");
 
 const tracks = [
   {
@@ -48,23 +47,26 @@ const tracks = [
 
 let currentIndex = 0;
 
-function playTrack(i) {
-  currentIndex = i;
+function setTrack(i) {
   musicCover.src = tracks[i].img;
   title.innerText = tracks[i].title;
   audio.src = tracks[i].src;
-  audio.onload(); // 오디오 준비
-  audio.play(); // 오디오 실행
+}
+
+function playTrack(i) {
+  currentIndex = i;
+  setTrack(i);
+  audio.load();
+  audio.play();
   updatePlayState(true);
 }
 
 function updatePlayState(isPlaying) {
   if (isPlaying) {
-    //true
-    squareBtn.classList.remove("hidden");
+    kittyBtn.classList.remove("hidden");
     pauseBtn.classList.add("hidden");
   } else {
-    squareBtn.classList.add("hidden");
+    kittyBtn.classList.add("hidden");
     pauseBtn.classList.remove("hidden");
   }
 }
@@ -75,7 +77,7 @@ prevBtn.onclick = () => {
 };
 
 nextBtn.onclick = () => {
-  currentIndex = (currentIndex + 1 + tracks.length) % tracks.length;
+  currentIndex = (currentIndex + 1) % tracks.length;
   playTrack(currentIndex);
 };
 
@@ -95,16 +97,27 @@ progressBar.addEventListener("input", () => {
   audio.currentTime = progressBar.value;
 });
 
+progressBar.addEventListener("mousedown", function (e) {
+  const rect = progressBar.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  if (!isNaN(audio.duration)) {
+    const newTime = percent * audio.duration;
+    audio.currentTime = newTime;
+    progressBar.value = newTime;
+  }
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.code === "Space" && !event.target.matches("input, textarea")) {
     event.preventDefault();
     togglePlayPause();
   }
 });
-pauseBtn.addEventListener("click", tooglePlayPause);
-squareBtn.addEventListener("click", tooglePlayPause);
 
-function tooglePlayPause() {
+pauseBtn.addEventListener("click", togglePlayPause);
+kittyBtn.addEventListener("click", togglePlayPause);
+
+function togglePlayPause() {
   if (audio.paused) {
     audio.play();
     updatePlayState(true);
@@ -113,3 +126,8 @@ function tooglePlayPause() {
     updatePlayState(false);
   }
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  setTrack(currentIndex);
+  updatePlayState(audio && !audio.paused);
+});

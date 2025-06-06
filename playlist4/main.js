@@ -9,18 +9,38 @@ const kittyBtn = document.querySelector(".kitty-btn");
 
 const tracks = [
   {
+    title: "먼 훗날 우리",
+    img: "./cover/in.jpg",
+    src: "./music/in.mp3",
+  },
+  {
+    title: "MOVIE",
+    img: "./cover/movie.jpg",
+    src: "./music/movie.mp3",
+  },
+  {
+    title: "나와 내 이웃에게",
+    img: "./cover/to.jpg",
+    src: "./music/to.mp3",
+  },
+  {
+    title: "봄눈",
+    img: "./cover/spring.jpg",
+    src: "./music/spring.mp3",
+  },
+  {
     title: "everything",
-    img: "./assets/cover/everything.jpg",
+    img: "./cover/everything.jpg",
     src: "./music/everything.mp3",
   },
   {
     title: "천년지애",
-    img: "./assets/cover/1000.jpg",
+    img: "./cover/1000.jpg",
     src: "./music/1000.mp3",
   },
   {
     title: "home-sweet-home",
-    img: "./assets/cover/home_sweet_home.jpg",
+    img: "./cover/home.jpg",
     src: "./music/home.mp3",
   },
 ];
@@ -69,18 +89,18 @@ audio.addEventListener("timeupdate", () => {
   progressBar.value = audio.currentTime;
 });
 
+// 기존 input 이벤트
 progressBar.addEventListener("input", () => {
   audio.currentTime = progressBar.value;
 });
 
-progressBar.addEventListener("pointerdown", function (e) {
+// ▶ 클릭한 위치로 이동하는 기능 추가!
+progressBar.addEventListener("click", function (e) {
   const rect = progressBar.getBoundingClientRect();
-  const clientX = e.clientX ?? (e.touches && e.touches[0].clientX);
-  const percent = (clientX - rect.left) / rect.width;
+  const offsetX = (e.clientX - rect.left) / rect.width;
   if (!isNaN(audio.duration)) {
-    const newTime = percent * audio.duration;
-    audio.currentTime = newTime;
-    progressBar.value = newTime;
+    audio.currentTime = offsetX * audio.duration;
+    progressBar.value = audio.currentTime;
   }
 });
 
@@ -103,3 +123,8 @@ function togglePlayPause() {
     updatePlayState(false);
   }
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  playTrack(currentIndex);
+  updatePlayState(audio && !audio.paused);
+});
